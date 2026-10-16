@@ -67,6 +67,11 @@ Do **not** mix `gtk4::Widget` and `adw::gtk::Widget` for the same type.
       GTK 3 (`gtk 0.18`) crashes the GTK 4 app on Linux.
 - [ ] Don't add `gio`/`glib` crates directly — use `gtk4::gio` / `gtk4::glib`.
 
+### Changing the croc Receiver
+- [ ] Read “Receiving Files” in `CLAUDE.md` — the parser depends on croc's exact output
+- [ ] `cargo test` (parser) and `cargo test -- --ignored --test-threads=1` (real croc)
+- [ ] After a croc upgrade, re-check its stderr/stdout wording against those notes
+
 ### New Tray Menu Item
 - [ ] Register an `app.<name>` action in `setup_app()` (`src/main.rs`)
 - [ ] Add a menu item with id `"<name>"` in `Tray::new()` (`src/tray.rs`)
@@ -78,9 +83,15 @@ Do **not** mix `gtk4::Widget` and `adw::gtk::Widget` for the same type.
 
 | File | Purpose | Edit? |
 |---|---|---|
+| `README.md`, `docs/*.md` | Human docs — keep in sync with behaviour changes | ✅ Yes |
 | `src/main.rs` | App entry, app actions, window + signal handlers | ✅ Yes |
+| `src/receiver.rs` | croc receive loop (background thread, polling) | ✅ Yes — see CLAUDE.md “Receiving Files” first |
 | `src/tray.rs` | System tray icon + menu → `app.*` actions | ✅ Yes |
-| `src/notification.rs` | System notifications — Linux only (`gio::Notification`) | ✅ Yes |
+| `src/notification.rs` | System notifications — gio on Linux, notify-rust on macOS | ✅ Yes |
+| `dev-install.sh` | Registers the dev build for notifications (Linux `.desktop`, macOS `.app`) | ✅ Yes |
+| `data/macos/Info.plist` | macOS bundle metadata (bundle id must equal `APP_ID`) | ✅ Yes |
+| `scripts/macos-app.sh` | Builds, signs and registers `Kopico Desktop.app`; `cargo run` runner on macOS | ✅ Rarely |
+| `.cargo/config.toml` | Sets that runner for macOS | ✅ Rarely |
 | `data/style.css` | App CSS, auto-loaded by `AdwApplication` | ✅ Yes |
 | `data/ui/window.blp` | Window UI layout | ✅ Yes |
 | `data/*.gresource.xml` | GResource manifest | ✅ When adding `.ui` files |

@@ -112,6 +112,59 @@ Adw.ApplicationWindow window {
             title: _("Advanced");
 
             Adw.PreferencesGroup {
+              title: _("Receive");
+              description: _("Kopico polls croc in the background and receives files automatically.");
+
+              // Subtitle is set from Rust to describe the selected mode
+              Adw.ComboRow relay_mode_row {
+                title: _("Relay Mode");
+
+                // Order must match RELAY_MODES in main.rs
+                model: Gtk.StringList {
+                  strings [
+                    _("Local Network"),
+                    _("Own Relay"),
+                    _("Public Relay"),
+                  ]
+                };
+              }
+
+              // Only visible for "Local Network". Optional: leave empty to discover
+              // the sender automatically; set it when discovery doesn't find it.
+              Adw.EntryRow sender_ip_row {
+                title: _("Sender IP Address (Optional)");
+                tooltip-text: _("The sender’s IP address, e.g. 192.168.1.20 — use this if automatic discovery doesn’t find it");
+                show-apply-button: true;
+              }
+
+              // Only visible for "Own Relay"
+              Adw.EntryRow relay_address_row {
+                title: _("Relay Address");
+                show-apply-button: true;
+                input-purpose: url;
+              }
+
+              Adw.PasswordEntryRow relay_password_row {
+                title: _("Relay Password");
+                show-apply-button: true;
+              }
+
+              Adw.EntryRow receive_code_row {
+                title: _("Receive Code");
+                show-apply-button: true;
+              }
+
+              Adw.ActionRow save_to_row {
+                title: _("Save To");
+                subtitle-selectable: true;
+
+                styles [
+                  "property",
+                ]
+              }
+            }
+
+            Adw.PreferencesGroup {
               title: _("Background");
 
               Adw.SwitchRow tray_row {

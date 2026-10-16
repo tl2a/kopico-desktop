@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<!--
+  macOS counterpart of data/in.tl2a.kopico-desktop.desktop.
+  dev-install.sh wraps the debug binary in "~/Applications/Kopico Desktop.app" with this
+  Info.plist and registers it, so notifications show as "Kopico Desktop" (the bundle id
+  must match APP_ID in src/main.rs).
+-->
+<plist version="1.0">
+<dict>
+  <key>CFBundleIdentifier</key>
+  <string>in.tl2a.kopico-desktop</string>
+  <key>CFBundleName</key>
+  <string>Kopico Desktop</string>
+  <key>CFBundleDisplayName</key>
+  <string>Kopico Desktop</string>
+  <key>CFBundleExecutable</key>
+  <string>kopico-desktop</string>
+  <key>CFBundlePackageType</key>
+  <string>APPL</string>
+  <key>CFBundleShortVersionString</key>
+  <string>0.1.0</string>
+  <key>CFBundleVersion</key>
+  <string>0.1.0</string>
+  <key>LSMinimumSystemVersion</key>
+  <string>11.0</string>
+  <key>NSHighResolutionCapable</key>
+  <true/>
+</dict>
+</plist>

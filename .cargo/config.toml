@@ -1,0 +1,5 @@
+# macOS: `cargo run` starts Kopico from inside "~/Applications/Kopico Desktop.app" so that
+# system notifications work (they require a signed app bundle). Other binaries — e.g.
+# `cargo test` — are passed through unchanged. See scripts/macos-app.sh.
+[target.'cfg(target_os = "macos")']
+runner = "scripts/macos-app.sh"

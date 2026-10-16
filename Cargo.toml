@@ -12,3 +12,19 @@ adw = { package = "libadwaita", version = "0.9", features = ["v1_9"] }
 # in one process. `ksni` (D-Bus StatusNotifierItem) is used on Linux instead; the
 # feature has no effect on macOS/Windows.
 tray-icon = { version = "0.26.1", default-features = false, features = ["ksni"] }
+# Platform-aware home/download directory paths (used by the receiver module)
+dirs-next = "2"
+# Wakes the GTK main loop when the croc thread reports an event (no polling)
+async-channel = "2"
+
+# Clipboard on macOS: GTK 4.22's macOS clipboard passes MIME types where AppKit wants
+# UTIs ("'text/plain' is not a valid UTI string") and silently copies nothing, so
+# received text goes to NSPasteboard directly. Same versions tray-icon already uses.
+[target.'cfg(target_os = "macos")'.dependencies]
+objc2-app-kit = { version = "0.3", default-features = false, features = ["std", "NSPasteboard"] }
+objc2-foundation = { version = "0.3", default-features = false, features = ["std", "NSString"] }
+# System notifications on macOS (Linux uses gio::Notification — GLib has no macOS
+# notification backend). `preview-macos-un` = Apple's current UNUserNotificationCenter
+# API instead of the deprecated NSUserNotificationCenter; it needs the app to run from
+# an .app bundle — see src/notification.rs and scripts/macos-run.sh.
+notify-rust = { version = "4.18", default-features = false, features = ["preview-macos-un"] }
